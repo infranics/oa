@@ -2,6 +2,7 @@
 import requests
 import json
 import logging
+import time
 
 # env info
 
@@ -297,16 +298,23 @@ logging.info('start kt_cloud_d_zone_script')
 
 my_token = get_token(my_username, my_password)
 
-#get_flavors(my_token)
+get_flavors(my_token)
 #get_images(my_token)
 #get_network(my_token)
 #get_servers(my_token)
 #create_sample_server(my_token)
 
-#server_id = create_server(my_token, my_server_name, my_key_name, my_flavor_id, my_zone_name, my_network_id, my_image_id )
+#server_id = create_server(my_token, "testvm01", my_key_name, my_flavor_id, my_zone_name, my_network_id, my_image_id )
 
+#time.sleep(10)
 
-delete_server(my_token, "7dab1270-f30b-49ca-9b2b-c1a3cd5120c3");
+#server_id = create_server(my_token, "testvm02", my_key_name, my_flavor_id, my_zone_name, my_network_id, my_image_id )
+
+delete_server(my_token, "907c3554-cae0-4419-882d-665e75ce9e6f");
+
+time.sleep(10)
+
+delete_server(my_token, "89824ea4-9d87-40bb-98ab-c791c5b6eedd");
 
 logging.info('end kt_cloud_d_zone_script')
 

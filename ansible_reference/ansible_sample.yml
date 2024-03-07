@@ -1,0 +1,189 @@
+- name : prepare install
+  hosts : test
+  become: yes
+  vars:                                    
+     local_path: /home/ubuntu/cert
+     remote_path: /home/ubuntu
+
+  tasks:
+  - name : Add hostfile
+    blockinfile:
+            path: /etc/hosts
+            block: |
+                192.168.119.11 bm-inception
+                192.168.119.13 bm-control
+                192.168.119.15 bm-cluster-1
+                192.168.119.17 bm-cluster-2
+                192.168.119.19 bm-cluster-3
+                192.168.119.21 bm-ceph-cluster-1
+                192.168.119.23 bm-ceph-cluster-2
+                192.168.119.25 bm-ceph-cluster-3
+
+  - name : Add DNS
+    blockinfile:
+            path: /etc/systemd/resolved.conf
+            block: |
+                 DNS=192.168.119.11
+
+  - name : restart DNS
+    become: true
+    shell :
+      cmd: |
+       sudo systemctl restart systemd-resolved.service
+
+  - name : apt sourcelist delete
+    become: true
+    shell :
+      cmd: |
+       sudo rm /etc/apt/sources.list
+
+  - name : apt sourcelist touch
+    become: true
+    shell :
+      cmd: |
+       sudo touch /etc/apt/sources.list
+
+  - name: import the ceph apt key
+    apt_key:
+      url: http://nexus.sys-cafe.com/repository/ceph-key/ceph_key.pem
+      state: present
+
+  - name: import the ceph apt key2
+    apt_key:
+      url: http://nexus.sys-cafe.com/repository/ceph-key/release.asc
+      state: present
+
+  - name: import the repo1
+    apt_repository:
+      repo:
+        deb http://nexus.sys-cafe.com/repository/apt-repo/ bionic main restricted
+      state: present
+
+  - name: import the repo2
+    apt_repository:
+      repo:
+        deb http://nexus.sys-cafe.com/repository/apt-repo/ bionic-updates main restricted
+      state: present
+
+  - name: import the repo3
+    apt_repository:
+      repo:
+        deb http://nexus.sys-cafe.com/repository/apt-repo/ bionic universe
+      state: present
+
+  - name: import the repo4
+    apt_repository:
+      repo:
+        deb http://nexus.sys-cafe.com/repository/apt-repo/ bionic-updates universe
+      state: present
+
+  - name: import the repo5
+    apt_repository:
+      repo:
+        deb http://nexus.sys-cafe.com/repository/apt-repo/ bionic multiverse
+      state: present
+
+  - name: import the repo6
+    apt_repository:
+      repo:
+        deb http://nexus.sys-cafe.com/repository/apt-repo/ bionic-updates multiverse
+      state: present
+
+  - name: import the repo7
+    apt_repository:
+      repo:
+        deb http://nexus.sys-cafe.com/repository/apt-repo/ bionic-backports main restricted universe multiverse
+      state: present
+
+  - name: import the repo8
+    apt_repository:
+      repo:
+        deb http://nexus.sys-cafe.com/repository/apt-repo/ bionic-security main restricted
+      state: present
+
+  - name: import the repo9
+    apt_repository:
+      repo:
+        deb http://nexus.sys-cafe.com/repository/apt-repo/ bionic-security universe
+      state: present
+
+  - name: import the repo10
+    apt_repository:
+      repo:
+        deb http://nexus.sys-cafe.com/repository/apt-repo/ bionic-security multiverse
+      state: present
+ 
+  - name: import ceph repo
+    apt_repository:
+      repo:
+        deb http://nexus.sys-cafe.com/repository/ceph-pacific/ bionic main
+      state: present
+
+  - name: import ceph repo2
+    apt_repository:
+      repo:
+        deb http://nexus.sys-cafe.com/repository/ceph-apt/ bionic main
+      state: present
+
+  - name: Update apt packages
+    apt:
+      update_cache: yes
+      cache_valid_time: 86400 #One day
+
+  - name: apt install
+    raw: sudo apt-get -y install ntp python unzip ca-certificates docker.io
+
+
+  - name: ca.cert copy
+    copy:
+      src: "{{ local_path }}/ca.crt"
+      dest: "{{ remote_path }}/ca.crt"
+      owner: ubuntu
+      group: ubuntu
+      mode: '0644'
+
+  - name: tls.cert copy
+    copy:
+      src: "{{ local_path }}/tls.crt"
+      dest: "{{ remote_path }}/tls.crt"
+      owner: ubuntu
+      group: ubuntu
+      mode: '0644'
+
+  - name : mkdir cert.d/registry
+    become: true
+    shell :
+      cmd: |
+       mkdir -p /etc/docker/certs.d/registry.sys-cafe.com
+
+  - name : mkdir ca-certificates/extra
+    become: true
+    shell :
+      cmd: |
+       mkdir -p /usr/share/ca-certificates/extra/
+
+
+  - name : copy cert file
+    become: true
+    shell :
+      cmd: |
+       cp /home/ubuntu/ca.crt /etc/docker/certs.d/registry.sys-cafe.com/
+
+  - name : copy cert file
+    become: true
+    shell :
+      cmd: |
+       cp /home/ubuntu/tls.crt /usr/share/ca-certificates/extra/
+
+  - name : config cert
+    become: true
+    shell :
+      cmd: |
+       echo "extra/tls.crt" >> /etc/ca-certificates.conf
+
+  - name : copy cert file
+    become: true
+    shell :
+      cmd: |
+       sudo update-ca-certificates
+
