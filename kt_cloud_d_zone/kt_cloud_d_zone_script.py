@@ -310,11 +310,9 @@ get_flavors(my_token)
 
 #server_id = create_server(my_token, "testvm02", my_key_name, my_flavor_id, my_zone_name, my_network_id, my_image_id )
 
-delete_server(my_token, "907c3554-cae0-4419-882d-665e75ce9e6f");
-
-time.sleep(10)
-
-delete_server(my_token, "89824ea4-9d87-40bb-98ab-c791c5b6eedd");
+#delete_server(my_token, "907c3554-cae0-4419-882d-665e75ce9e6f");
+#time.sleep(10)
+#delete_server(my_token, "89824ea4-9d87-40bb-98ab-c791c5b6eedd");
 
 logging.info('end kt_cloud_d_zone_script')
 
