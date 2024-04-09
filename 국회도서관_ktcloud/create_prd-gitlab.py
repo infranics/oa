@@ -308,13 +308,12 @@ my_token = get_token(my_username, my_password)
 #get_servers(my_token)
 #create_sample_server(my_token)
 
-server_id = create_server(my_token, "prd-gitlab", my_key_name, my_flavor_id, my_zone_name, my_network_id, my_image_id )
+#server_id = create_server(my_token, "prd-gitlab", my_key_name, my_flavor_id, my_zone_name, my_network_id, my_image_id )
 
 #time.sleep(10)
-
 #server_id = create_server(my_token, "testvm02", my_key_name, my_flavor_id, my_zone_name, my_network_id, my_image_id )
 
-#delete_server(my_token, "907c3554-cae0-4419-882d-665e75ce9e6f");
+delete_server(my_token, "fd06788d-ad22-4712-99f8-fed6f0558a32");
 #time.sleep(10)
 #delete_server(my_token, "89824ea4-9d87-40bb-98ab-c791c5b6eedd");
 

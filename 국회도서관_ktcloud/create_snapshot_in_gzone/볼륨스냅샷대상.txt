@@ -1,0 +1,25 @@
+볼륨 스냅샷 대상 
+
+systeer@infranics.com -> servers -> disk 에서 아래 disk 17개 검색 -> root-번호-오늘날짜 형태로 저장
+
+각각 disk에 볼륨스냅샷 생성 
+1주일 지난 볼륨 스냅샷 삭제
+
+ROOT-31835  -  fffb0434-97ed-4414-8ac7-0a0664aaa94f
+ROOT-31837  -  50df6caf-a21b-486c-a34d-b4c6d34de458
+ROOT-22319  -  37a4e7b5-8b56-407a-8109-04c3233a18f3
+ROOT-5375    -  ec2adab8-8b2e-4b7d-a19f-afaa76a278d8
+ROOT-5376    -  fa0b037f-79e4-464e-b421-c500ca162352
+ROOT-19328  -  2a36a4f9-f05c-4b31-a160-486d6f5613fe
+ROOT-19329  -  1b945514-4d3c-4a44-a56e-a325719d5637
+ROOT-19330  -  e3a6d859-0b5f-45f2-869c-2518895cccbf
+ROOT-2217   -  4e2d2211-6599-47da-8bdf-a4824a09472e
+ROOT-24136  - 774dcce9-ab3a-4d40-8116-bd26335266bb
+ROOT-24138  -  79e25066-e36b-4973-a66f-cafc2595170c
+ROOT-24139  -  b246670d-c59f-4e33-86ed-1d4777735d6a
+ROOT-2213   -  8b5c3b9c-6cf3-4c97-a0a8-ffabcfdc0ebc
+ROOT-2216   -  0d280a9a-0016-4330-bfa3-6fbd285d7fc6
+ROOT-5730   -  91d25d0b-5abe-4d80-a06f-13573e6e9131
+ROOT-5731   -  72e47097-a402-4aea-bc82-e78fb724490a
+
+ROOT-6898 (현재는 제외)   - ebbbf0eb-9e7f-4ed1-a916-eb021ada7a9e
